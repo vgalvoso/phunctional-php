@@ -1,14 +1,4 @@
 # PHP-RESTAPI
-Fast and lightweight rest api framework that uses core php.
-No dependencies.
+PHunctional PHP is a functional PHP framework.
 
-for links inside view subdirectories use <?=$host?>
-e.g. <form action="<?=$host?>api/logout">
-
-routes.php set routes
-API routes
-    post("routename","api filename")
-    get("routename","api filename")
-    put("routename","api filename")
-Web routes
-    route("routename","view")
+Today's development uses complicated or too much abstraction of codes, it doesn't have to be that way.
