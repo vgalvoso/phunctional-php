@@ -67,12 +67,11 @@ include "section/header.php";
         </div>
         <div class="pad-section col w-100" id="install">
             <h1 class="text-header mar-big">Installation</h1>
-            <p>PHunctional PHP is a functional PHP framework.</p>
-            <p class=" ml-2 mb-2 mt-2 i">Today's development uses complicated or too much abstraction of codes, it doesn't have to be that way.</p>
-            <p>Doesn't it cool to easily know what the code does in one look?</p>
-            <p>Doesn't it cool to focus on the output rather than wasting your time on technical stuffs?</p>
-            <p>Doesn't it cool to use a framework imediately without overwhelming configurations and dependencies?</p>
-            <p class="mt-2 mb-1">This is what PHuncional PHP is all about.</p>
+            <p>Download the <a href="">latest version</a> and extract it on your web server's root folder.</p>
+        </div>
+        <div class="pad-section col w-100" id="first_app">
+            <h1 class="text-header mar-big">Build Your First App</h1>
+            <p>Hello World! Yes let's create your first hello world using PHunctional PHP.</p>
         </div>
         <div class="pad-section col" id="routing">
             <h1 class="text-header mar-big">Routing</h1>
