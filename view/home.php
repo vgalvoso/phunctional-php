@@ -35,7 +35,7 @@ include "section/header.php";
         </div>
         <div class="pad-section col w-100" id="structure">
             <h1 class="text-header mar-big">Structure</h1>
-            <p class=" ml-2 i">Here is the basic directory structure of PHTMX.</p>
+            <p class=" ml-2 i">Here is the basic directory structure of PHunctional PHP.</p>
             <ul class="mt-2 mb-2">
                 <li>> api</li>
                 <li>> lib</li>
