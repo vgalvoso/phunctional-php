@@ -1,8 +1,11 @@
 <?php
 include "section/header.php";
 ?>
+<nav class="none mobile-show">
+    <div><a href="#top"><button>PHunctional PHP</button></a></div>
+</nav>
 <div class="row">
-    <div class="w-25 center col sticky-top">
+    <div class="w-25 center col sticky-top mobile-hide">
         <div class="w-100 col mt-2 center">
             <h1 class="text-banner">PHunctional PHP</h1>
             <h2 class="text-subheader">Functional PHP Framework</h2>
@@ -16,7 +19,11 @@ include "section/header.php";
             <a class="w-100" href="#views" class="white"><button class="w-100 mar-0">Views</button></a>
         </div>
     </div>
-    <div class="w-75 pad col bg-white">
+    <div class="w-75 pad col bg-white mobile-grow">
+        <div class="pad-section col w-100 center" id="top">
+            <h1 class="text-banner">PHunctional PHP</h1>
+            <h2 class="text-subheader">Functional PHP Framework</h2>
+        </div>
         <div class="pad-section col w-100" id="intro">
             <h1 class="text-header mar-big">Introduction</h1>
             <p>PHunctional PHP is a functional PHP framework.</p>
@@ -75,8 +82,8 @@ include "section/header.php";
             <p class="mb-2">Hello World! Yes let's create your first hello world using PHunctional PHP.</p>
             <p class="mb-1">After you download and extract the latest version <a href="#install" class="info u">(see installation)</a>, create a php file inside view folder and name it hello_world.php</p>
             <p>Let's assume you named your root folder "helloworld", this is what your project directory might look like:</p>
-            <div class="center w-25 mt-2 mb-2">
-                <img src="public/res/img/hello_world.png" alt="">
+            <div class="center w-25 mt-2 mb-2 mobile-grow">
+                <img src="public/res/img/hello_world.png" width="100%" class="mobile-grow" alt="">
             </div>
             <p>Copy and paste this code inside hello_world.php</p>
             <div class="ml-2 bg-dark-gray pad-big mt-1 mb-2">
@@ -108,7 +115,7 @@ include "section/header.php";
             </div>
             <p class="mb-1">Now try to access this on your browser <a href="http://localhost/helloworld/hello" class="info u" target="_blank">http://localhost/helloworld/hello</a></p>
             <p>It should look like this:</p>
-            <div class="w-100 center mt-1 mb-2">
+            <div class="w-100 center mt-1 mb-2 mobile-grow">
                 <img src="public/res/img/hello_page.png" width="100%" alt="">
             </div>
             <p>Congratulations! You created your first hello world using PHunctional PHP.</p>

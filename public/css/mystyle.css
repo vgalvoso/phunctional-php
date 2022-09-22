@@ -658,7 +658,6 @@ ul li > * {
     display:flex;
     flex-direction: column;
     width:100%;
-    margin:5%;
   }
 
   .mobile-grow{
