@@ -67,11 +67,51 @@ include "section/header.php";
         </div>
         <div class="pad-section col w-100" id="install">
             <h1 class="text-header mar-big">Installation</h1>
-            <p>Download the <a href="">latest version</a> and extract it on your web server's root folder.</p>
+            <p>Download the <a href="https://github.com/vgalvoso/phunctional-php/releases" class="info u" target="_blank">latest version</a> and extract it on your web server's root folder.</p>
+            <p class="mt-1">Then rename the extracted root folder into your project's name.</p>
         </div>
         <div class="pad-section col w-100" id="first_app">
             <h1 class="text-header mar-big">Build Your First App</h1>
-            <p>Hello World! Yes let's create your first hello world using PHunctional PHP.</p>
+            <p class="mb-2">Hello World! Yes let's create your first hello world using PHunctional PHP.</p>
+            <p class="mb-1">After you download and extract the latest version <a href="#install" class="info u">(see installation)</a>, create a php file inside view folder and name it hello_world.php</p>
+            <p>Let's assume you named your root folder "helloworld", this is what your project directory might look like:</p>
+            <div class="center w-25 mt-2 mb-2">
+                <img src="public/res/img/hello_world.png" alt="">
+            </div>
+            <p>Copy and paste this code inside hello_world.php</p>
+            <div class="ml-2 bg-dark-gray pad-big mt-1 mb-2">
+                <p class="white">
+                    <code>
+                        &lt;?php include <span class="string">"section/header.php";</span> ?&gt;
+                        <br>
+                        <span class="info">&lt;h1&gt;Hello World!&lt;/h1&gt;</span>
+                        <br>
+                        &lt;?php include <span class="string">"section/footer.php";</span>
+                    </code></p>
+            </div>
+            <p>Open routes.php and add a new view route. Your routes.php should look something like this:</p>
+            <div class="ml-2 bg-dark-gray mt-1 mb-2 pad-big">
+                <p class="white">
+                    <code>
+                        &lt;?php
+                        <br><br>
+                        <span class="success">//api routes</span>
+                        <br><br>
+                        <span class="success">//views routes</span>
+                        <br>
+                        <span class="warning">view(<span class="string">""</span>,<span class="string">"home"</span>);</span>
+                        <br>
+                        <span class="warning">view(<span class="string">"hello"</span>,<span class="string">"hello_world"</span>);</span>
+                        <br><br>
+                        <span class="warning">notFound();</span>
+                    </code></p>
+            </div>
+            <p class="mb-1">Now try to access this on your browser <a href="http://localhost/helloworld/hello" class="info u" target="_blank">http://localhost/helloworld/hello</a></p>
+            <p>It should look like this:</p>
+            <div class="w-100 center mt-1 mb-2">
+                <img src="public/res/img/hello_page.png" width="100%" alt="">
+            </div>
+            <p>Congratulations! You created your first hello world using PHunctional PHP.</p>
         </div>
         <div class="pad-section col" id="routing">
             <h1 class="text-header mar-big">Routing</h1>

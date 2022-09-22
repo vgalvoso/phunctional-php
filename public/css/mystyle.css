@@ -310,6 +310,9 @@ select{
 .i{
   font-style:italic;
 }
+.u{
+  text-decoration: underline;
+}
 /*#endregion */
 
 /*#region FORE COLOR */
