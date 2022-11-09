@@ -1,16 +1,20 @@
 <?php
+include "DotEnv.php";
+(new DotEnv(BASE_DIR . '/.env'))->load();
 $path = $_SERVER['REQUEST_URI'];
 //get $path except first "/"
 $path = substr($path, 1);
 //remove string from start to second "/"
-$path = substr($path, strpos($path, "/") + 1);
-define("BASE_URL","http://localhost/phtmx/");
+if(getenv('APP_ENV') == "development")
+    $path = substr($path, strpos($path, "/") + 1);
 $method = $_SERVER['REQUEST_METHOD'];
 
-function api($routeName,$api,$method){
+function api($routeName,$api,$data){
     global $path;
+    global $method;
     $route = $routeName;
     //for request with parameters in uri 
+    //get("api/{param1,param2}","api");
     if(strpos($routeName,"{")){   
         //get routeName without parameters 
         $tempRoute = substr($routeName,0,strpos($routeName,"{")+1);
@@ -36,8 +40,12 @@ function api($routeName,$api,$method){
     }
     if($route != $path)
         return;
+    
+    if($method == 'GET')
+        if($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
+            notFound();
     $path = $api;
-    extract($method);
+    extract($data);
     if(!file_exists("api/$path.php")){
         if(!file_exists("api/$path/index.php")){   
             notFound();
@@ -69,16 +77,19 @@ function put($routeName,$api){
     api($routeName,$api,$_PUT);
 }
 
-function view($routeName,$view){
+function view($routeName,$view,$part=false){
     global $path;
     if($routeName != $path)
         return;
+    if($part)
+        if($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
+            notFound();
     include "view/$view.php";
     exit();
 }
 
-function toRoute($routeName){
-    header("Location: ".BASE_URL.$routeName);
+function to($route){
+    header("Location: $route");
 }
 
 function notFound(){

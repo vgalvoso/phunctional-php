@@ -1,7 +1,8 @@
 <?php
   session_start();
-  require_once "autoload.php";
+  define('BASE_DIR',__DIR__);
   require_once "lib/Sql.php";
   require_once "lib/Helper.php";
-  require_once "routes.php";
+  require_once "routes/api.php";
+  require_once "routes/web.php";
 ?>
