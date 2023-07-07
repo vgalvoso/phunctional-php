@@ -1,2 +1,0 @@
-<?php
-post("postapi","postapi");
