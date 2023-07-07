@@ -1,14 +1,19 @@
 <?php
 include "DotEnv.php";
 (new DotEnv(BASE_DIR . '/.env'))->load();
-$path = $_SERVER['REQUEST_URI'];
-//get $path except first "/"
-$path = substr($path, 1);
-//remove string from start to second "/"
-if(getenv('APP_ENV') == "development")
-    $path = substr($path, strpos($path, "/") + 1);
-$method = $_SERVER['REQUEST_METHOD'];
-
+$path = "";
+if(isset($_SERVER['REQUEST_URI'])){
+	$path = $_SERVER['REQUEST_URI'];
+    //get $path except first "/"
+    $path = substr($path, 1);
+    //remove string from start to second "/"
+    if(getenv('APP_ENV') == "development")
+        $path = substr($path, strpos($path, "/") + 1);
+    $method = $_SERVER['REQUEST_METHOD'];
+}else{
+	$path = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
+}
+define('PATH',$path);
 function api($routeName,$api,$data){
     global $path;
     global $method;
@@ -53,7 +58,6 @@ function api($routeName,$api,$data){
         $path = $path."/index";
     }
     
-    $sql = new Sql();
     include "api/$path.php";
     exit();
 }
@@ -77,15 +81,31 @@ function put($routeName,$api){
     api($routeName,$api,$_PUT);
 }
 
+/**
+ * Create route for views
+ *
+ * @param string $routeName Name of the route
+ * @param string $view Path to the view file without .php extension
+ * @param bool $part Specify if the view is part only (for htmx) or a new page
+ * 
+ * @return Exit  
+ */
 function view($routeName,$view,$part=false){
     global $path;
     if($routeName != $path)
         return;
     if($part)
-        if($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
+        if(isset($_SERVER["HTTP_SEC_FETCH_MODE"]) && $_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
             notFound();
     include "view/$view.php";
     exit();
+}
+
+function cli($routeName,$api){
+    global $path;
+    if($routeName != $path)
+        return;
+    include "api/$api.php";
 }
 
 function to($route){
