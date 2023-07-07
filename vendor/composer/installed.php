@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'vgalvoso/phunctional',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '074fc5c0cd72128f2d875f9b1b1f7ff2e79d4c68',
+        'reference' => '1d98b819a577a5933e12ed0cf8e3fb2d5f63aa53',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
+        'vgalvoso/phunctional' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '074fc5c0cd72128f2d875f9b1b1f7ff2e79d4c68',
+            'reference' => '1d98b819a577a5933e12ed0cf8e3fb2d5f63aa53',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
