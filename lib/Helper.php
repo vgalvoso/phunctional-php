@@ -47,7 +47,7 @@ function api($routeName,$api,$data){
         return;
     
     if($method == 'GET')
-        if($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
+        if(isset($_SERVER["HTTP_SEC_FETCH_MODE"]) && ($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate"))
             notFound();
     $path = $api;
     extract($data);
@@ -116,5 +116,3 @@ function notFound(){
     header("HTTP/1.1 404 Not Found");
     exit("URL not found");
 }
-
-
