@@ -1,2 +1,2 @@
 <?php
-post("postapi","postapi");
+post("users","add_user");
