@@ -71,6 +71,8 @@ After you download and extract the latest version (see installation), create a P
 
 Let's assume you named your root folder "helloworld", this is what your project directory might look like.
 
+![Helloworld directory](https://raw.githubusercontent.com/vgalvoso/phunctional-php/refs/heads/master/public/res/img/hello_world.png)
+
 Copy and paste this code inside `hello_world.php`:
 
 ```php
