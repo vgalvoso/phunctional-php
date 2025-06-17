@@ -1,25 +1,22 @@
 <?php
 include "DotEnv.php";
-(new DotEnv(BASE_DIR . '/.env'))->load();
-$path = "";
-if(isset($_SERVER['REQUEST_URI'])){
-	$path = $_SERVER['REQUEST_URI'];
-    //get $path except first "/"
-    $path = substr($path, 1);
-    //remove string from start to second "/"
-    if(getenv('APP_ENV') == "development")
-        $path = substr($path, strpos($path, "/") + 1);
-    $method = $_SERVER['REQUEST_METHOD'];
-}else{
-	$path = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : '';
-}
-define('PATH',$path);
+$dotenv = new DotEnv(BASE_DIR . '/.env');
+$dotenv->load();
+$path = $_SERVER['REQUEST_URI'];
+//get $path except first "/"
+$path = substr($path, 1);
+//remove string from start to second "/"
+if(getenv('APP_ENV') == "development")
+    $path = substr($path, strpos($path, "/") + 1);
+$method = $_SERVER['REQUEST_METHOD'];
+
 function api($routeName,$api,$data){
     global $path;
     global $method;
     $route = $routeName;
     //for request with parameters in uri 
     //get("api/{param1,param2}","api");
+    
     if(strpos($routeName,"{")){   
         //get routeName without parameters 
         $tempRoute = substr($routeName,0,strpos($routeName,"{")+1);
@@ -31,9 +28,9 @@ function api($routeName,$api,$data){
 
         
         //check if routename exists in request uri
-        if(str_contains($path,$route)){
+        if(strpos($path,$route) !== false){
             $pos = strrpos($route,"/");
-            $paramValues = substr($path,$pos+1);
+            $paramValues = urldecode(substr($path,$pos+1));
             $paramValues = explode("/",$paramValues);
             if(count($paramKeys) != count($paramValues))
                 notFound();
@@ -46,11 +43,11 @@ function api($routeName,$api,$data){
     if($route != $path)
         return;
     
-    if($method == 'GET')
-        if(isset($_SERVER["HTTP_SEC_FETCH_MODE"]) && ($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate"))
-            notFound();
     $path = $api;
-    extract($data);
+    if(!$data)
+        $data = json_decode(file_get_contents('php://input'),true);
+    if($data)
+        extract($data);
     if(!file_exists("api/$path.php")){
         if(!file_exists("api/$path/index.php")){   
             notFound();
@@ -58,6 +55,7 @@ function api($routeName,$api,$data){
         $path = $path."/index";
     }
     
+    $sql = new Sql();
     include "api/$path.php";
     exit();
 }
@@ -81,31 +79,15 @@ function put($routeName,$api){
     api($routeName,$api,$_PUT);
 }
 
-/**
- * Create route for views
- *
- * @param string $routeName Name of the route
- * @param string $view Path to the view file without .php extension
- * @param bool $part Specify if the view is part only (for htmx) or a new page
- * 
- * @return Exit  
- */
 function view($routeName,$view,$part=false){
     global $path;
     if($routeName != $path)
         return;
     if($part)
-        if(isset($_SERVER["HTTP_SEC_FETCH_MODE"]) && $_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
+        if($_SERVER["HTTP_SEC_FETCH_MODE"] == "navigate")
             notFound();
     include "view/$view.php";
     exit();
-}
-
-function cli($routeName,$api){
-    global $path;
-    if($routeName != $path)
-        return;
-    include "api/$api.php";
 }
 
 function to($route){
@@ -116,3 +98,5 @@ function notFound(){
     header("HTTP/1.1 404 Not Found");
     exit("URL not found");
 }
+
+

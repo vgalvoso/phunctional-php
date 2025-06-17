@@ -5,6 +5,7 @@ class Sql{
     protected $db;
     public $error;
     public $query;
+    private $params;
     
     /**
      * Connect to database
@@ -19,7 +20,7 @@ class Sql{
      * 
      * @author Van
      */
-    public function __construct($dbase="default",$server="",$user="",$pass="",$dbname="",$driver=""){
+    public function __construct($dbase="default",$server="",$user="",$pass="",$dbname="",$driver="",$port=""){
         require "Database.php";
         if($dbase != null){
             $server = $db[$dbase]["server"];
@@ -27,10 +28,11 @@ class Sql{
             $pass = $db[$dbase]["pass"];
             $dbname = $db[$dbase]["dbname"];
             $driver = $db[$dbase]["driver"];
+            $port = $db[$dbase]["port"];
         }
         try{
-            $this->conn = new PDO("$driver:host=$server;dbname=$dbname;",$user,$pass,
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $this->conn = new PDO("$driver:host=$server;port=$port;dbname=$dbname;",$user,$pass,
+                array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
         }catch(PDOException $e){
             exit($this->error = $e->getMessage());
         }
@@ -42,6 +44,21 @@ class Sql{
 
     public function getError(){
         return $this->error;
+    }
+
+    public function getQuery(){
+        $temp_sql = $this->query;
+        foreach ($this->params as $key => $value) {
+            if (is_numeric($value)) {
+                // If value is numeric, just replace with it directly
+                $temp_sql = str_replace(":$key", (int)$value, $temp_sql);
+            } else {
+                // If value is not numeric, use quote() to properly escape it
+                $temp_sql = str_replace(":$key", $this->conn->quote($value), $temp_sql);
+            }
+        }
+        $temp_sql = str_replace(["\r", "\n"], ' ', $temp_sql);
+        return $temp_sql;
     }
     
     /**
@@ -57,6 +74,8 @@ class Sql{
      */
     public function getItem($query,$inputs=null){
         try{
+            $this->query = $query;
+            $this->params = $inputs;
             $stmt = $this->conn->prepare($query);
             $stmt->execute($inputs);
             return $stmt->fetch(PDO::FETCH_OBJ);
@@ -79,6 +98,8 @@ class Sql{
      */
     public function getItems($query,$inputs=null){
         try{
+            $this->query = $query;
+            $this->params = $inputs;
             $stmt = $this->conn->prepare($query);
             $stmt->execute($inputs);
             return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -102,7 +123,7 @@ class Sql{
     public function insert($table,$values){
         try{
             $keys = array_keys($values);
-            $newKeys = [];
+            $newKeys = array();
             foreach($keys as $key){
                 array_push($newKeys,":$key");
             }
