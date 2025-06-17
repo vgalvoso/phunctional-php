@@ -94,6 +94,8 @@ Now try to access this on your browser: `http://localhost/helloworld/hello`
 
 It should look like this:
 
+![Helloworld directory](https://raw.githubusercontent.com/vgalvoso/phunctional-php/refs/heads/master/public/res/img/hello_page.png)
+
 Congratulations! You created your first hello world using PHunctional PHP.
 
 ## Routing
